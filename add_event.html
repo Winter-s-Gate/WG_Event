@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>Ajouter un événement RP</title>
+		<style>
+			body { font-family: sans-serif; padding: 2em; background: #f9f9f9; }
+			form { background: white; padding: 1em; border-radius: 8px; max-width: 400px; margin: auto; }
+			label { display: block; margin-top: 1em; }
+			input, button { width: 100%; padding: 0.5em; margin-top: 0.5em; }
+			button { background: #4CAF50; color: white; border: none; cursor: pointer; }
+			#confirmation { margin-top: 1em; text-align: center; font-weight: bold; }
+		</style>
+	</head>
+	<body>
+		<form id="eventForm">
+			<h2>➕ Ajouter un événement RP</h2>
+			<label>🕒 Heure:</label>
+			<input type="time" name="time" required>
+			<label>📅 Date:</label>
+			<input type="date" name="date" required>
+
+			<label>🎭 Titre:</label>
+			<input type="text" name="title" required>
+
+			<label>👤 Animateur:</label>
+			<input type="text" name="host">
+
+			<label>📍 Lieu:</label>
+			<input type="text" name="location">
+
+			<label>🖼️ Flyer (URL):</label>
+			<input type="url" name="image">
+
+			<label>🔁 Répéter (7 jours):</label>
+			<input type="checkbox" name="repeat">
+
+			<button type="submit">📤 Envoyer vers le calendrier</button>
+		</form>
+
+		<div id="confirmation"></div>
+
+		<script>
+			document.getElementById("eventForm").addEventListener("submit", function (e) {
+				e.preventDefault();
+				const data = Object.fromEntries(new FormData(e.target).entries());
+				data.repeat = !!data.repeat;
+
+				fetch("https://script.google.com/macros/s/AKfycbwakuQeOWLvz_aG9rRoWVsZyXEdTVkHzwheG_wQ7QIYumcdOhaujEgrjaoXA0qM7Ta7/exec", {
+					method: "POST",
+					body: JSON.stringify(data),
+					headers: { "Content-Type": "application/json" }
+				})
+				.then(res => res.ok ? "✅ Événement ajouté !" : "❌ Erreur lors de l'envoi.")
+				.then(msg => document.getElementById("confirmation").textContent = msg);
+			});
+		</script>
+	</body>
+</html>
