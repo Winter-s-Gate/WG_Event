@@ -14,28 +14,29 @@
 	</head>
 	<body>
 		<form id="eventForm">
-			<h2>➕ Ajouter un événement RP</h2>
-			<label>🕒 Heure:</label>
+			<h2>➕ Add event</h2>
+			<label>🕒 Hours:</label>
 			<input type="time" name="time" required>
 			<label>📅 Date:</label>
 			<input type="date" name="date" required>
 
-			<label>🎭 Titre:</label>
+			<label>🎭 Title:</label>
 			<input type="text" name="title" required>
 
 			<label>👤 Animateur:</label>
 			<input type="text" name="host">
 
-			<label>📍 Lieu:</label>
+			<label>📍 Landmark:</label>
 			<input type="text" name="location">
 
 			<label>🖼️ Flyer (URL):</label>
 			<input type="url" name="image">
 
-			<label>🔁 Répéter (7 jours):</label>
+			<label>🔁 Weekly:</label>
 			<input type="checkbox" name="repeat">
 
-			<button type="submit">📤 Envoyer vers le calendrier</button>
+			<button type="submit">📤 Send</button>
+			<button type="button" onclick="cancelForm()">❌ Cancel</button>
 		</form>
 
 		<div id="confirmation"></div>
