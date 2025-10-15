@@ -1,12 +1,10 @@
-const calendarEndpoint = "https://script.google.com/macros/s/AKfycbym0JNoyxhol6TVgUSKJiY4U6heRvlHNLhrGeya1infhYQtzcWoGo-XUhyvw4Tf4cvq/exec";
-const eventJsonURL = "https://raw.githubusercontent.com/Winter-s-Gate/WG_Event/main/event.json"; // lecture
-const backendWriteURL = "https://ton-backend/write-event"; // écriture
-const backendDeleteURL = "https://ton-backend/delete-event"; // suppression
+const calendarEndpoint = "https://script.google.com/macros/s/AKfycbyY9tcS4saldRfcQmk14gyPDbjxmNtpJgXIY6YlV6gUINAMVRelUrMILvzTbWrNhNEK/exec";
+const sheetJsonURL = "https://script.google.com/macros/s/AKfycbxyljx-PwvbSPA02e-NF-okSlFdnLY3SI21q_o3FohdxeWKf0g7esDqXHE5B5uduekR/exec"; // lecture depuis doGet()
 
 let events = [];
 
-// 🔄 Charger les événements et afficher ceux du bloc horaire actuel
-fetch(eventJsonURL)
+// 🔄 Charger les événements depuis la Sheet et afficher ceux du bloc horaire actuel
+fetch(sheetJsonURL)
   .then(res => res.json())
   .then(data => {
     events = removeDuplicates(data);
@@ -39,7 +37,7 @@ fetch(eventJsonURL)
 function removeDuplicates(data) {
   const seen = new Set();
   return data.filter(event => {
-    const key = `${event.title}-${event.start?.split("T")[0]}`;
+    const key = `${event.title}-${event.date}`;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
@@ -74,23 +72,5 @@ function sendToCalendar(data) {
   }).then(res => {
     if (!res.ok) throw new Error("Erreur d'envoi à Calendar");
     return res.text();
-  });
-}
-
-// 📁 Ajouter un événement à events.json via backend
-function addToJson(data) {
-  return fetch(backendWriteURL, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
-  });
-}
-
-// 🗑️ Supprimer un événement via backend
-function deleteFromJson(title, date) {
-  return fetch(backendDeleteURL, {
-    method: "POST",
-    body: JSON.stringify({ title, date }),
-    headers: { "Content-Type": "application/json" }
   });
 }
