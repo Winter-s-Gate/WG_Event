@@ -44,6 +44,10 @@
 			document.getElementById("eventForm").addEventListener("submit", function (e) {
 				e.preventDefault();
 				const data = Object.fromEntries(new FormData(e.target).entries());
+				const start = new Date(`${data.date}T${data.time}`);
+				const end = new Date(start.getTime() + 60 * 60 * 1000); // +1h par défaut
+				data.start = start.toISOString();
+				data.end = end.toISOString();
 				data.repeat = !!data.repeat;
 
 				fetch("https://script.google.com/macros/s/AKfycbwakuQeOWLvz_aG9rRoWVsZyXEdTVkHzwheG_wQ7QIYumcdOhaujEgrjaoXA0qM7Ta7/exec", {
