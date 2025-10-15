@@ -52,7 +52,7 @@
 				data.repeat = !!data.repeat;
 				console.log(data); // debug
 
-				fetch("https://script.google.com/macros/s/AKfycbwakuQeOWLvz_aG9rRoWVsZyXEdTVkHzwheG_wQ7QIYumcdOhaujEgrjaoXA0qM7Ta7/exec", {
+				fetch("https://script.google.com/macros/s/AKfycbygO_SHltNNDItS8trfAdERQwvkfQlXhfIlw8QGO10iMNErEtw426XVQCD3dK2AK3UN/exec", {
 					method: "POST",
 					body: JSON.stringify(data),
 					headers: { "Content-Type": "application/json" }
@@ -63,10 +63,12 @@
 					console.error("Erreur de soumission :", err);
 					document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
 				});
-				function cancelForm() {
-					window.location.href = "index.html"; // ou window.history.back();
-				}
 			});
+		</script>
+		<script>
+			function cancelForm() {
+				window.location.href = "index.html"; // ou window.history.back();
+			}
 		</script>
 	</body>
 </html>
