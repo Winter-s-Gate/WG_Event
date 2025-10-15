@@ -1,4 +1,4 @@
-const calendarEndpoint = "https://script.google.com/macros/s/TON_SCRIPT_ID/exec";
+const calendarEndpoint = "https://script.google.com/macros/s/AKfycbwawIraJef1LN7a8ewwZSPzchFxjfiyXhucpWBXMu6v6MBbntE348AX8WlYTDH0GLRd/exec";
 const eventJsonURL = "https://winter-s-gate.github.io/data/events.json"; // lecture
 const backendWriteURL = "https://ton-backend/write-event"; // écriture
 const backendDeleteURL = "https://ton-backend/delete-event"; // suppression
