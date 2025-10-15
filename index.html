@@ -1,41 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>RP Calendar - WG_Event</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="container">
-			<!-- Banner / Flyer -->
-			<div class="banner">
-				<img id="eventBanner" src="https://via.placeholder.com/1024x300?text=RP+Flyer" alt="RP Flyer" />
-			</div>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RP Calendar – WG_Event</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- Banner / Flyer -->
+        <div class="banner">
+            <img id="eventBanner" src="" alt="RP Flyer" />
+        </div>
 
-			<!-- Host / Location -->
-			<div class="info">
-				<p><strong>Hosted by:</strong> <span id="eventHost">—</span></p>
-				<p><strong>Location:</strong> <span id="eventLocation">—</span></p>
-			</div>
+        <!-- Host / Location -->
+        <div class="info">
+            <p><strong>Host:</strong> <span id="eventHost"></span></p>
+            <p><strong>Landmark:</strong> <span id="eventLocation"></span></p>
+        </div>
 
-			<!-- Current Date -->
-			<div class="date">
-				<p id="currentDate">Tuesday, October 14th</p>
-			</div>
+        <!-- Current Date -->
+        <div class="date">
+            <p id="currentDate"></p>
+        </div>
 
-			<!-- Event List -->
-			<div class="event-list">
-				<button onclick="selectEvent(0)">🕒 08:00 - Cheer</button>
-				<button onclick="selectEvent(1)">🕒 10:00 - Astronomy</button>
-			</div>
+        <!-- Event List (dynamique via JS) -->
+        <div class="event-list"></div>
 
-			<!-- Create Event Button -->
-			<div class="create">
-				<a href="add_event.html">➕ Create Event</a>
-			</div>
-		</div>
+        <!-- Create Event Button -->
+        <div class="create">
+            <a href="add_event.html">➕ Add Event</a>
+        </div>
+    </div>
 
-		<script src="scripts/update.js"></script>
-	</body>
+    <script src="scripts/update.js"></script>
+</body>
 </html>
