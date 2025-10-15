@@ -1,4 +1,4 @@
-const calendarEndpoint = "https://script.google.com/macros/s/AKfycbzj90PHA35EWx1OfLrrQv7FU2LyRGvrydeeEYDGxIyXSTubxXnDCS_x0hE4sy51pEWt/exec";
+const calendarEndpoint = "https://script.google.com/macros/s/AKfycbym0JNoyxhol6TVgUSKJiY4U6heRvlHNLhrGeya1infhYQtzcWoGo-XUhyvw4Tf4cvq/exec";
 const eventJsonURL = "https://raw.githubusercontent.com/Winter-s-Gate/WG_Event/main/event.json"; // lecture
 const backendWriteURL = "https://ton-backend/write-event"; // écriture
 const backendDeleteURL = "https://ton-backend/delete-event"; // suppression
