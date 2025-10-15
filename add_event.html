@@ -50,6 +50,7 @@
 				data.start = start.toISOString();
 				data.end = end.toISOString();
 				data.repeat = !!data.repeat;
+				console.log(data); // debug
 
 				fetch("https://script.google.com/macros/s/AKfycbwakuQeOWLvz_aG9rRoWVsZyXEdTVkHzwheG_wQ7QIYumcdOhaujEgrjaoXA0qM7Ta7/exec", {
 					method: "POST",
@@ -58,6 +59,13 @@
 				})
 				.then(res => res.ok ? "✅ Événement ajouté !" : "❌ Erreur lors de l'envoi.")
 				.then(msg => document.getElementById("confirmation").textContent = msg);
+				.catch(err => {
+					console.error("Erreur de soumission :", err);
+					document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
+				});
+				function cancelForm() {
+					window.location.href = "index.html"; // ou window.history.back();
+				}
 			});
 		</script>
 	</body>
