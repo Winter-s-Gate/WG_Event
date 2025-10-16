@@ -8,6 +8,8 @@ let bannerIndex = 0;
 let bannerInterval = null;
 
 const userUUID = new URLSearchParams(window.location.search).get("uuid");
+console.log("UUID détecté :", userUUID);
+
 const ADMIN_UUIDS = [
   "24f8bb10-9088-4220-aa12-28ed2b006a9a"
 ];
