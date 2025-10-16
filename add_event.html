@@ -58,7 +58,7 @@
 					headers: { "Content-Type": "application/json" }
 				})
 				.then(res => res.ok ? "✅ Événement ajouté !" : "❌ Erreur lors de l'envoi.")
-				.then(msg => document.getElementById("confirmation").textContent = msg);
+				.then(msg => document.getElementById("confirmation").textContent = msg)
 				.catch(err => {
 					console.error("Erreur de soumission :", err);
 					document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
