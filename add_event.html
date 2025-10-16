@@ -44,21 +44,31 @@
 		<script>
 			document.getElementById("eventForm").addEventListener("submit", function (e) {
 				e.preventDefault();
-				const data = Object.fromEntries(new FormData(e.target).entries());
-				const start = new Date(`${data.date}T${data.time}`);
-				const end = new Date(start.getTime() + 60 * 60 * 1000); // +1h par défaut
-				data.start = start.toISOString();
-				data.end = end.toISOString();
-				data.repeat = !!data.repeat;
-				console.log(data); // debug
+				const form = e.target;
+				const formData = new FormData(form);
+
+				// Normalise la checkbox repeat
+				formData.set("repeat", form.repeat.checked ? "true" : "false");
+
+				// Ajoute l’UUID si présent dans l’URL
+				const uuid = new URLSearchParams(window.location.search).get("uuid");
+				if (uuid) formData.set("uuid", uuid);
+
+				const body = new URLSearchParams(formData).toString();
 
 				fetch("https://script.google.com/macros/s/AKfycbyOnZ5v_5UQuPbVMM5_DYKKDXeyJyAdcpAS2foTzRYQbgwbwvtnLzOoaPaPjUbfe2jn/exec", {
 					method: "POST",
-					body: JSON.stringify(data),
-					headers: { "Content-Type": "application/json" }
+					headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+					body: body
 				})
-				.then(res => res.ok ? "✅ Événement ajouté !" : "❌ Erreur lors de l'envoi.")
-				.then(msg => document.getElementById("confirmation").textContent = msg)
+				.then(res => {
+					if (!res.ok) throw new Error("response not ok");
+					return res.text();
+				})
+				.then(msg => {
+					document.getElementById("confirmation").textContent = "✅ Événement ajouté !";
+					console.log("Réponse serveur:", msg);
+				})
 				.catch(err => {
 					console.error("Erreur de soumission :", err);
 					document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
