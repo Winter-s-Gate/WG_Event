@@ -7,8 +7,20 @@ const defaultBanners = [
 let bannerIndex = 0;
 let bannerInterval = null;
 
-const urlParams = new URLSearchParams(window.location.search);
-const userUUID = urlParams.get("uuid");
+const userUUID = new URLSearchParams(window.location.search).get("uuid");
+const ADMIN_UUIDS = [
+  "24f8bb10-9088-4220-aa12-28ed2b006a9a"
+];
+
+const isAdmin = ADMIN_UUIDS.includes(userUUID);
+if (isAdmin) {
+  document.body.classList.add("admin-mode");
+  document.querySelectorAll(".admin-only").forEach(el => {
+  el.style.display = "block";
+});
+
+}
+
 
 const calendarEndpoint = "https://script.google.com/macros/s/AKfycbyY9tcS4saldRfcQmk14gyPDbjxmNtpJgXIY6YlV6gUINAMVRelUrMILvzTbWrNhNEK/exec";
 const sheetJsonURL = "https://script.google.com/macros/s/AKfycbxyljx-PwvbSPA02e-NF-okSlFdnLY3SI21q_o3FohdxeWKf0g7esDqXHE5B5uduekR/exec"; // lecture depuis doGet()
@@ -17,13 +29,7 @@ let events = [];
 
 // 🔄 Charger les événements depuis la Sheet et afficher ceux du bloc horaire actuel
 fetch(sheetJsonURL)
-	.then(res => res.json())
-	if (filteredEvents.length > 0) {
-		selectEvent(filteredEvents[0]);
-	} else {	
-		selectEvent(null); // lance les bannières pub
-	}
-
+  .then(res => res.json())
   .then(data => {
     events = removeDuplicates(data);
     const now = new Date();
@@ -47,9 +53,14 @@ fetch(sheetJsonURL)
     });
 
     renderEventList(filteredEvents);
-    if (filteredEvents.length > 0) selectEvent(filteredEvents[0]);
+    if (filteredEvents.length > 0) {
+      selectEvent(filteredEvents[0]);
+    } else {
+      selectEvent(null); // lance les bannières pub
+    }
   })
   .catch(err => console.error("Erreur de chargement :", err));
+
 
 // 🧼 Supprimer les doublons (même titre + même date)
 function removeDuplicates(data) {
