@@ -7,6 +7,9 @@ const defaultBanners = [
 let bannerIndex = 0;
 let bannerInterval = null;
 
+const urlParams = new URLSearchParams(window.location.search);
+const userUUID = urlParams.get("uuid");
+
 const calendarEndpoint = "https://script.google.com/macros/s/AKfycbyY9tcS4saldRfcQmk14gyPDbjxmNtpJgXIY6YlV6gUINAMVRelUrMILvzTbWrNhNEK/exec";
 const sheetJsonURL = "https://script.google.com/macros/s/AKfycbxyljx-PwvbSPA02e-NF-okSlFdnLY3SI21q_o3FohdxeWKf0g7esDqXHE5B5uduekR/exec"; // lecture depuis doGet()
 
