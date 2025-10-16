@@ -24,8 +24,8 @@ if (isAdmin) {
 }
 
 
-const calendarEndpoint = "https://script.google.com/macros/s/AKfycbyNOXEaH01GPOmuUZArZg7ZjUEI9SkJJrfuZOsOVs7tkrgs77bccJc4K1BbHQ11Xx0A/exec";
-const sheetJsonURL = "https://script.google.com/macros/s/AKfycbwaeKW5mBtzoQ1FqeDYIamHKYN6699_Wh6QUUkiHUIxUyABq9Z28H1sFIPPC8ciZEBb/exec"; // lecture depuis doGet()
+const calendarEndpoint = "https://script.google.com/macros/s/AKfycbybX_75gRVOkw-RlHRp_bmHyA1MLqQa8rbQ6wYBO7Z76Qxq-Pes7Kzh7YRbxUow-fLO/exec";
+const sheetJsonURL = "https://script.google.com/macros/s/AKfycbxqTmCrXTnQMlOHxo31xdGvyUjrrXy6c82FnaM_lkGaH6hxlRaHLW4jiMOFwdKaqpR8/exec"; // lecture depuis doGet()
 
 let events = [];
 
