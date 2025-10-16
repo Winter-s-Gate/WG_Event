@@ -1,3 +1,12 @@
+const defaultBanners = [
+  "assets/img/pub1.jpg",
+  "assets/img/pub2.jpg",
+  "assets/img/pub3.jpg"
+];
+
+let bannerIndex = 0;
+let bannerInterval = null;
+
 const calendarEndpoint = "https://script.google.com/macros/s/AKfycbyY9tcS4saldRfcQmk14gyPDbjxmNtpJgXIY6YlV6gUINAMVRelUrMILvzTbWrNhNEK/exec";
 const sheetJsonURL = "https://script.google.com/macros/s/AKfycbxyljx-PwvbSPA02e-NF-okSlFdnLY3SI21q_o3FohdxeWKf0g7esDqXHE5B5uduekR/exec"; // lecture depuis doGet()
 
@@ -5,7 +14,13 @@ let events = [];
 
 // 🔄 Charger les événements depuis la Sheet et afficher ceux du bloc horaire actuel
 fetch(sheetJsonURL)
-  .then(res => res.json())
+	.then(res => res.json())
+	if (filteredEvents.length > 0) {
+		selectEvent(filteredEvents[0]);
+	} else {	
+		selectEvent(null); // lance les bannières pub
+	}
+
   .then(data => {
     events = removeDuplicates(data);
     const now = new Date();
@@ -56,11 +71,33 @@ function renderEventList(events) {
   });
 }
 
+function startBannerRotation() {
+  if (bannerInterval) return; // évite les doublons
+  document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
+  bannerInterval = setInterval(() => {
+    bannerIndex = (bannerIndex + 1) % defaultBanners.length;
+    document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
+  }, 10000); // toutes les 10 secondes
+}
+
+function stopBannerRotation() {
+  clearInterval(bannerInterval);
+  bannerInterval = null;
+}
+
 // 🖼️ Mettre à jour le flyer et les infos
 function selectEvent(event) {
+  if (!event || !event.image) {
+    startBannerRotation();
+    document.getElementById("eventHost").textContent = "";
+    document.getElementById("eventLocation").textContent = "";
+    return;
+  }
+
+  stopBannerRotation();
   document.getElementById("eventHost").textContent = event.host || "";
   document.getElementById("eventLocation").textContent = event.location || "";
-  document.getElementById("eventBanner").src = event.image || "https://via.placeholder.com/1024x300?text=RP+Flyer";
+  document.getElementById("eventBanner").src = event.image;
 }
 
 // 📤 Ajouter un événement à Google Calendar
