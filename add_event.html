@@ -50,7 +50,13 @@
 				formData.set("repeat", form.repeat.checked ? "true" : "false");
 
 				// Ajoute l’UUID si présent dans l’URL
-				const uuid = new URLSearchParams(window.location.search).get("uuid");
+				let uuid = new URLSearchParams(window.location.search).get("uuid");
+				if (uuid) {
+					localStorage.setItem("wg_uuid", uuid); // stocke pour plus tard
+				} else {
+					uuid = localStorage.getItem("wg_uuid"); // récupère si déjà stocké
+				}
+
 				if (uuid) formData.set("uuid", uuid);
 
 				const body = new URLSearchParams(formData).toString();
@@ -65,8 +71,10 @@
 					return res.text();
 				})
 				.then(msg => {
-					document.getElementById("confirmation").textContent = "✅ Événement ajouté !";
+					document.getElementById("confirmation").textContent = msg;
+					console.log("Réponse serveur:", msg);
 				})
+
 				.catch(err => {
 					console.error("Erreur de soumission :", err);
 					document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
