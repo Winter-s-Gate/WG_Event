@@ -60,7 +60,6 @@ fetch(eventEndpoint)
       selectEvent(null);
     }
   })
-  .catch(err => console.error("Erreur de chargement :", err));
 
 function removeDuplicates(data) {
   const seen = new Set();
