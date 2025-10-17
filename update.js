@@ -39,6 +39,10 @@ const eventEndpoint = "https://wgevent.wintersgatesl.workers.dev/";
 
 let events = [];
 
+setInterval(() => {
+  location.reload();
+}, 60000); // toutes les 60 secondes
+
 fetch(eventEndpoint)
   .then(res => res.json())
   .then(data => {
