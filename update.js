@@ -47,8 +47,15 @@ fetch(eventEndpoint)
   .then(res => res.json())
   .then(data => {
     events = removeDuplicates(data);
-    const now = new Date();
-    const currentHour = now.getHours();
+	function getSLTime() {
+		const now = new Date();
+		const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+		const slOffset = -8; // GMT-8
+		return new Date(utc + 3600000 * slOffset);
+	}
+	const now = getSLTime();
+	const currentHour = now.getHours();
+
     const currentDate = now.toLocaleDateString("fr-FR", {
       weekday: "long",
       day: "numeric",
