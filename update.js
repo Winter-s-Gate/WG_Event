@@ -18,19 +18,17 @@ const isAdmin = ADMIN_UUIDS.includes(userUUID);
 if (isAdmin) {
   document.body.classList.add("admin-mode");
   document.querySelectorAll(".admin-only").forEach(el => {
-  el.style.display = "block";
-});
-
+    el.style.display = "block";
+  });
 }
 
-
-const calendarEndpoint = "https://script.google.com/macros/s/AKfycby6pFxSTNi5Ps99GR-jMtLSOQPXmHNvt1nz_K1kcp5HnRMt59hgOJpxv8vCp-DUMDSn/exec";
-const sheetJsonURL = "https://script.google.com/macros/s/AKfycbzc56P1rUAKyOf3SGc_sOJkQVaW7RreG2pjwFyVXOdav9bw-LWnmFAILlMdEg1VsJqL/exec"; // lecture depuis doGet()
+// ✅ Un seul endpoint pour lecture et écriture
+const eventEndpoint = "https://script.google.com/macros/s/TON_NOUVEAU_DEPLOIEMENT/exec"; // ← remplace par ton nouveau ID
 
 let events = [];
 
 // 🔄 Charger les événements depuis la Sheet et afficher ceux du bloc horaire actuel
-fetch(sheetJsonURL)
+fetch(eventEndpoint)
   .then(res => res.json())
   .then(data => {
     events = removeDuplicates(data);
@@ -63,7 +61,6 @@ fetch(sheetJsonURL)
   })
   .catch(err => console.error("Erreur de chargement :", err));
 
-
 // 🧼 Supprimer les doublons (même titre + même date)
 function removeDuplicates(data) {
   const seen = new Set();
@@ -88,12 +85,12 @@ function renderEventList(events) {
 }
 
 function startBannerRotation() {
-  if (bannerInterval) return; // évite les doublons
+  if (bannerInterval) return;
   document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
   bannerInterval = setInterval(() => {
     bannerIndex = (bannerIndex + 1) % defaultBanners.length;
     document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
-  }, 10000); // toutes les 10 secondes
+  }, 10000);
 }
 
 function stopBannerRotation() {
@@ -118,10 +115,12 @@ function selectEvent(event) {
 
 // 📤 Ajouter un événement à Google Calendar
 function sendToCalendar(data) {
-  return fetch(calendarEndpoint, {
+  return fetch(eventEndpoint, {
     method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
+    body: new URLSearchParams(data).toString(),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+    }
   }).then(res => {
     if (!res.ok) throw new Error("Erreur d'envoi à Calendar");
     return res.text();
