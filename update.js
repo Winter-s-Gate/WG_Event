@@ -23,7 +23,7 @@ if (isAdmin) {
 }
 
 // ✅ Un seul endpoint pour lecture et écriture
-const eventEndpoint = "https://script.google.com/macros/s/TON_NOUVEAU_DEPLOIEMENT/exec"; // ← remplace par ton nouveau ID
+const eventEndpoint = "https://script.google.com/macros/s/AKfycbxGC533oPazo4wDPMij2YpVZKO2LgqhMVyi4qUgqGfr_iZjuo3vZS6KieaJF17oIRQS/exec"; // ← remplace par ton nouveau ID
 
 let events = [];
 
