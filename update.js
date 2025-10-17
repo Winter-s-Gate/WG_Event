@@ -117,7 +117,6 @@ function selectEvent(event) {
 function sendToCalendar(data) {
   return fetch(eventEndpoint, {
     method: "POST",
-	credentials: 'include'
     body: new URLSearchParams(data).toString(),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
