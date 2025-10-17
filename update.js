@@ -22,12 +22,10 @@ if (isAdmin) {
   });
 }
 
-// ✅ Un seul endpoint pour lecture et écriture
 const eventEndpoint = "https://wgevent.wintersgatesl.workers.dev/"
 
 let events = [];
 
-// 🔄 Charger les événements depuis la Sheet et afficher ceux du bloc horaire actuel
 fetch(eventEndpoint)
   .then(res => res.json())
   .then(data => {
@@ -56,12 +54,11 @@ fetch(eventEndpoint)
     if (filteredEvents.length > 0) {
       selectEvent(filteredEvents[0]);
     } else {
-      selectEvent(null); // lance les bannières pub
+      selectEvent(null);
     }
   })
   .catch(err => console.error("Erreur de chargement :", err));
 
-// 🧼 Supprimer les doublons (même titre + même date)
 function removeDuplicates(data) {
   const seen = new Set();
   return data.filter(event => {
@@ -72,7 +69,6 @@ function removeDuplicates(data) {
   });
 }
 
-// 🎭 Afficher les boutons d’événements
 function renderEventList(events) {
   const list = document.querySelector(".event-list");
   list.innerHTML = "";
@@ -98,7 +94,6 @@ function stopBannerRotation() {
   bannerInterval = null;
 }
 
-// 🖼️ Mettre à jour le flyer et les infos
 function selectEvent(event) {
   if (!event || !event.image) {
     startBannerRotation();
@@ -113,7 +108,6 @@ function selectEvent(event) {
   document.getElementById("eventBanner").src = event.image;
 }
 
-// 📤 Ajouter un événement à Google Calendar
 function sendToCalendar(data) {
   return fetch(eventEndpoint, {
     method: "POST",
