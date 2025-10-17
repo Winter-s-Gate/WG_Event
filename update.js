@@ -22,6 +22,9 @@ if (isAdmin) {
   });
 }
 
+const uuid = localStorage.getItem("wg_uuid");
+if (uuid) formData.set("uuid", uuid);
+
 const eventEndpoint = "https://wgevent.wintersgatesl.workers.dev/"
 
 let events = [];

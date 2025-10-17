@@ -41,6 +41,17 @@
 		<div id="confirmation"></div>
 
 		<script>
+		// 🔐 Masque et automatise l’identifiant RP
+		(function () {
+			const urlUUID = new URLSearchParams(window.location.search).get("uuid");
+			if (urlUUID) {
+				localStorage.setItem("wg_uuid", urlUUID);
+				// Nettoie l’URL pour masquer le paramètre
+				const cleanURL = window.location.origin + window.location.pathname;
+				window.history.replaceState({}, document.title, cleanURL);
+			}
+		})();
+
 			document.getElementById("eventForm").addEventListener("submit", function (e) {
 				e.preventDefault();
 				const form = e.target;
