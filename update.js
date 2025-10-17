@@ -1,3 +1,14 @@
+// 🔐 Capture et stocke l’UUID dès le chargement initial
+(function () {
+  const urlUUID = new URLSearchParams(window.location.search).get("uuid");
+  if (urlUUID) {
+    localStorage.setItem("wg_uuid", urlUUID);
+    const cleanURL = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanURL);
+  }
+})();
+
+// 🎭 Bannières par défaut
 const defaultBanners = [
   "assets/img/pub1.jpg",
   "assets/img/pub2.jpg",
@@ -7,25 +18,24 @@ const defaultBanners = [
 let bannerIndex = 0;
 let bannerInterval = null;
 
-const userUUID = new URLSearchParams(window.location.search).get("uuid");
-console.log("UUID détecté :", userUUID);
+// 🔐 Récupération de l’UUID stocké
+const uuid = localStorage.getItem("wg_uuid");
+console.log("UUID actif :", uuid);
 
+// 🎖️ Mode admin si UUID reconnu
 const ADMIN_UUIDS = [
   "24f8bb10-9088-4220-aa12-28ed2b006a9a"
 ];
 
-const isAdmin = ADMIN_UUIDS.includes(userUUID);
-if (isAdmin) {
+if (ADMIN_UUIDS.includes(uuid)) {
   document.body.classList.add("admin-mode");
   document.querySelectorAll(".admin-only").forEach(el => {
     el.style.display = "block";
   });
 }
 
-const uuid = localStorage.getItem("wg_uuid");
-if (uuid) formData.set("uuid", uuid);
-
-const eventEndpoint = "https://wgevent.wintersgatesl.workers.dev/"
+// 📡 Endpoint serveur
+const eventEndpoint = "https://wgevent.wintersgatesl.workers.dev/";
 
 let events = [];
 
@@ -59,8 +69,9 @@ fetch(eventEndpoint)
     } else {
       selectEvent(null);
     }
-  })
+  });
 
+// 🔁 Supprime les doublons (titre + date)
 function removeDuplicates(data) {
   const seen = new Set();
   return data.filter(event => {
@@ -71,6 +82,7 @@ function removeDuplicates(data) {
   });
 }
 
+// 📋 Affiche la liste des événements
 function renderEventList(events) {
   const list = document.querySelector(".event-list");
   list.innerHTML = "";
@@ -82,6 +94,7 @@ function renderEventList(events) {
   });
 }
 
+// 🎞️ Rotation des bannières par défaut
 function startBannerRotation() {
   if (bannerInterval) return;
   document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
@@ -96,6 +109,7 @@ function stopBannerRotation() {
   bannerInterval = null;
 }
 
+// 🎯 Sélectionne un événement
 function selectEvent(event) {
   if (!event || !event.image) {
     startBannerRotation();
@@ -110,7 +124,10 @@ function selectEvent(event) {
   document.getElementById("eventBanner").src = event.image;
 }
 
+// 📤 Envoie un événement au serveur
 function sendToCalendar(data) {
+  if (uuid) data.uuid = uuid;
+
   return fetch(eventEndpoint, {
     method: "POST",
     body: new URLSearchParams(data).toString(),
