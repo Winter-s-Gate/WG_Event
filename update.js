@@ -12,7 +12,7 @@
 const defaultBanners = [
   "assets/img/1_wgcbanner.jpg",
   "assets/img/2_wgpdbanner.jpg",
-  "assets/img/pub3.jpg"
+  "assets/img/3_wgfdbanner.jpg"
 ];
 
 let bannerIndex = 0;
