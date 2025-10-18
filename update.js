@@ -144,10 +144,20 @@ function selectEvent(event) {
 		return;
 	}
 
-	stopBannerRotation();
-	document.getElementById("eventHost").textContent = event.host || "";
-	document.getElementById("eventLocation").textContent = event.location || "";
-	document.getElementById("eventBanner").src = event.image;
+    // 🧪 Test de validité d’image
+    const img = new Image();
+    img.onload = () => {
+        stopBannerRotation();
+        document.getElementById("eventBanner").src = event.image;
+        document.getElementById("eventHost").textContent = event.host || "";
+        document.getElementById("eventLocation").textContent = event.location || "";
+    };
+    img.onerror = () => {
+        startBannerRotation(); // ⛔ Image cassée → fallback
+        document.getElementById("eventHost").textContent = "";
+        document.getElementById("eventLocation").textContent = "";
+    };
+    img.src = event.image;
 }
 
 	// 📤 Envoie un événement au serveur
