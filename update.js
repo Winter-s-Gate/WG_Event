@@ -42,9 +42,10 @@ const eventEndpoint = "https://wgevent.wintersgatesl.workers.dev/";
 
 let events = [];
 
+// ⏱️ Rafraîchissement automatique toutes les heures
 setInterval(() => {
     location.reload();
-}, 60000); // toutes les 60 secondes
+}, 3600000); // 1h
 
 startBannerRotation(); // ✅ Lance la rotation dès le chargement
 
@@ -53,46 +54,31 @@ fetch(eventEndpoint)
     .then(data => {
         events = removeDuplicates(data);
 
+        // 🕒 Heure SL (GMT-8)
         function getSLTime() {
             const now = new Date();
             const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-            const slOffset = -8; // GMT-8
+            const slOffset = -8;
             return new Date(utc + 3600000 * slOffset);
         }
 
         const now = getSLTime();
-        const currentHour = now.getHours();
-
         const currentDate = now.toLocaleDateString("en-US", {
-			weekday: "long",
-			day: "numeric",
-			month: "long"
-		});
-
+            weekday: "long",
+            day: "numeric",
+            month: "long"
+        });
 
         document.getElementById("currentDate").textContent = currentDate;
 
-        const blockStart = currentHour >= 6 && currentHour < 12 ? 6 :
-                           currentHour >= 12 && currentHour < 18 ? 12 :
-                           currentHour >= 18 && currentHour < 24 ? 18 : 0;
-        const blockEnd = blockStart + 6;
+        // 📅 Filtrage : tous les événements du jour
+        const today = now.toISOString().split("T")[0];
 
-        const filteredEvents = events.filter(event => {
-            let hour = NaN;
-
-            if (typeof event.time === "string") {
-                const [h] = event.time.split(":").map(Number);
-                hour = h;
-            } else if (event.time instanceof Date || typeof event.time === "object") {
-                hour = new Date(event.time).getHours();
-            } else if (!isNaN(Date.parse(event.time))) {
-                hour = new Date(event.time).getHours();
-            }
-
-            return hour >= blockStart && hour < blockEnd;
+        const visibleEvents = events.filter(ev => {
+            return ev.date === today;
         });
 
-        renderEventList(filteredEvents);
+        renderEventList(visibleEvents);
     });
 
 // 🔁 Supprime les doublons (titre + date)
@@ -117,11 +103,11 @@ function renderEventList(events) {
 
         const line1 = document.createElement("div");
         line1.className = "event-title";
-        const [h, m] = event.time.split(":").map(Number);
-		const hour12 = ((h + 11) % 12) + 1;
-		const suffix = h >= 12 ? "PM" : "AM";
-		const formattedTime = `${hour12}:${m.toString().padStart(2, "0")} ${suffix}`;
-		line1.textContent = `🕒 ${formattedTime} – ${event.title}`;
+        const [h, m] = (event.time || "00:00").split(":").map(Number);
+        const hour12 = ((h + 11) % 12) + 1;
+        const suffix = h >= 12 ? "PM" : "AM";
+        const formattedTime = `${hour12}:${m.toString().padStart(2, "0")} ${suffix}`;
+        line1.textContent = `🕒 ${formattedTime} – ${event.title}`;
 
         const line2 = document.createElement("div");
         line2.className = "event-meta";
