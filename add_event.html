@@ -5,25 +5,25 @@
     <style>
       body {
         font-family: sans-serif;
-        padding: 2.0em;
+        padding: 1.2em;
         background: #f9f9f9;
       }
       form {
         background: white;
-        font-size: 1.5em;
+        font-size: 1.2em;
         padding: 1em;
         border-radius: 8px;
         max-width: 400px;
         margin: auto;
       }
       label {
-        font-size: 1.5em;
+        font-size: 1.2em;
         display: block;
         margin-top: 1em;
       }
       input,
       button {
-        font-size: 1.5em;
+        font-size: 1.2em;
         width: 100%;
         padding: 0.5em;
         margin-top: 0.5em;
@@ -60,12 +60,16 @@
 
     <script>
       // 🔐 Capture et stocke l’UUID dès le chargement initial
+      let uuid = null;
       (function () {
         const urlUUID = new URLSearchParams(window.location.search).get("uuid");
         if (urlUUID) {
           localStorage.setItem("wg_uuid", urlUUID);
+          uuid = urlUUID;
           const cleanURL = window.location.origin + window.location.pathname;
           window.history.replaceState({}, document.title, cleanURL);
+        } else {
+          uuid = localStorage.getItem("wg_uuid");
         }
       })();
 
@@ -78,7 +82,6 @@
         formData.set("repeat", form.repeat.checked ? "true" : "false");
 
         // 🔐 Injecte l’UUID stocké
-        const uuid = localStorage.getItem("wg_uuid");
         if (uuid) formData.set("uuid", uuid);
 
         const body = new URLSearchParams(formData).toString();
@@ -97,6 +100,9 @@
           .then(msg => {
             document.getElementById("confirmation").textContent = msg;
             console.log("Réponse serveur:", msg);
+            setTimeout(() => {
+              window.location.href = `index.html?uuid=${uuid}`;
+            }, 1500); // ⏳ Attente avant redirection
           })
           .catch(err => {
             console.error("Erreur de soumission :", err);
@@ -105,7 +111,7 @@
       });
 
       function cancelForm() {
-        window.location.href = "index.html";
+        window.location.href = `index.html?uuid=${uuid}`;
       }
     </script>
   </body>
