@@ -1,90 +1,80 @@
 /* Base layout */
 body {
-	margin: 0;
-	padding: 0;
-	font-family: 'Cinzel', serif;
-	/*background: url("assets/img/default.jpg") no-repeat center center fixed;*/
-	background-size: cover;
-	color: #2c1d0f;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cinzel', serif;
+    /*background: url("assets/img/default.jpg") no-repeat center center fixed;*/
+    background-size: cover;
+    color: #2c1d0f;
 }
 
 .container {
-	max-width: 960px;
-	margin: 0 auto;
-	padding: 20px;
-	background: rgba(255, 248, 231, 0.95);
-	border: 2px solid #a88c5f;
-	border-radius: 12px;
-	box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 248, 231, 0.95);
+    border: 2px solid #a88c5f;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
 
 /* Banner */
 .banner img {
-	width: 100%;
-	height: auto;
-	border-radius: 8px;
-	box-shadow: 0 0 10px #a88c5f;
-	margin-bottom: 20px;
-}
-
-/* Info block */
-.info {
-	font-size: 2em;
-	margin-bottom: 20px;
-}
-
-.info p {
-	margin: 5px 0;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #a88c5f;
+    margin-bottom: 20px;
 }
 
 /* Date */
 .date {
-	font-size: 2.2em;
-	font-weight: bold;
-	text-align: center;
-	margin-bottom: 20px;
-	color: #5a3e1b;
+    font-size: 2.2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #5a3e1b;
 }
 
 /* Event list */
 .event-list {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
 }
 
 .event-list button {
-	background-color: #d6b98c;
-	border: none;
-	padding: 10px;
-	font-size: 2.5em;
-	border-radius: 6px;
-	cursor: pointer;
-	transition: background-color 0.3s ease;
+    background-color: #d6b98c;
+    border: none;
+    padding: 10px;
+    font-size: 2.5em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .event-list button:hover {
-	background-color: #c4a06e;
+    background-color: #c4a06e;
 }
 
 /* Create button */
 .create {
-	text-align: center;
+    text-align: center;
 }
 
 .create a {
-	display: inline-block;
-	background-color: #5a3e1b;
-	color: #fff8e7;
-	padding: 10px 20px;
-	border-radius: 8px;
-	text-decoration: none;
-	font-weight: bold;
-	box-shadow: 0 0 10px #a88c5f;
-	transition: background-color 0.3s ease;
+    display: inline-block;
+    background-color: #5a3e1b;
+    color: #fff8e7;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 10px #a88c5f;
+    transition: background-color 0.3s ease;
 }
 
 .create a:hover {
-	background-color: #3e2a12;
+    background-color: #3e2a12;
 }
