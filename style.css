@@ -3,9 +3,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Cinzel', serif;
-    /*background: url("assets/img/default.jpg") no-repeat center center fixed;*/
     background-size: cover;
-    color: #2c1d0f;
+    color: #ffffff;
 }
 
 .container {
@@ -13,9 +12,9 @@ body {
     margin: 0 auto;
     padding: 20px;
     background: rgba(255, 248, 231, 0.95);
-    border: 2px solid #a88c5f;
+    border: 2px solid #9d1f23;
     border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    box-shadow: 0 0 20px rgba(8,48.0,80,0.3);
 }
 
 /* Banner */
@@ -23,7 +22,7 @@ body {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 0 10px #a88c5f;
+    box-shadow: 0 0 10px #9d1f23;
     margin-bottom: 20px;
 }
 
@@ -33,7 +32,7 @@ body {
     font-weight: bold;
     text-align: center;
     margin-bottom: 20px;
-    color: #5a3e1b;
+    color: #083050;
 }
 
 /* Event list */
@@ -46,8 +45,8 @@ body {
 
 /* Event block (nouveau format) */
 .event-block {
-    background-color: #f4e7d0;
-    border: 2px solid #a88c5f;
+    background-color: #083050;
+    border: 2px solid #951d20;
     border-radius: 8px;
     padding: 10px 15px;
     font-size: 1.6em;
@@ -61,7 +60,7 @@ body {
 
 .event-meta {
     font-size: 0.9em;
-    color: #5a3e1b;
+    color: #ffffff;
 }
 
 /* Create button */
@@ -71,16 +70,16 @@ body {
 
 .create a {
     display: inline-block;
-    background-color: #5a3e1b;
-    color: #fff8e7;
+    background-color: #ffffff;
+    color: #ffffff;
     padding: 10px 20px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    box-shadow: 0 0 10px #a88c5f;
+    box-shadow: 0 0 10px #9d1f23;
     transition: background-color 0.3s ease;
 }
 
 .create a:hover {
-    background-color: #3e2a12;
+    background-color: #083050;
 }
