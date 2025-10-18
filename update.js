@@ -63,11 +63,12 @@ fetch(eventEndpoint)
         const now = getSLTime();
         const currentHour = now.getHours();
 
-        const currentDate = now.toLocaleDateString("fr-FR", {
-            weekday: "long",
-            day: "numeric",
-            month: "long"
-        });
+        const currentDate = now.toLocaleDateString("en-US", {
+			weekday: "long",
+			day: "numeric",
+			month: "long"
+		});
+
 
         document.getElementById("currentDate").textContent = currentDate;
 
@@ -116,7 +117,11 @@ function renderEventList(events) {
 
         const line1 = document.createElement("div");
         line1.className = "event-title";
-        line1.textContent = `🕒 ${event.time} – ${event.title}`;
+        const [h, m] = event.time.split(":").map(Number);
+		const hour12 = ((h + 11) % 12) + 1;
+		const suffix = h >= 12 ? "PM" : "AM";
+		const formattedTime = `${hour12}:${m.toString().padStart(2, "0")} ${suffix}`;
+		line1.textContent = `🕒 ${formattedTime} – ${event.title}`;
 
         const line2 = document.createElement("div");
         line2.className = "event-meta";
