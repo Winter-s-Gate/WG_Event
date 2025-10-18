@@ -1,38 +1,31 @@
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>RP Calendar – WG_Event</title>
-		<link rel="stylesheet" href="style.css" />
-	</head>
-	<body>
-		<div class="container">
-			<!-- Banner / Flyer -->
-			<div class="banner">
-				<img id="eventBanner" src="" alt="RP Flyer" />
-			</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>RP Calendar – WG_Event</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <!-- Banner / Flyer -->
+            <div class="banner">
+                <img id="eventBanner" src="" alt="RP Banner" />
+            </div>
 
-			<!-- Host / Location -->
-			<div class="info">
-				<p><strong>Host:</strong> <span id="eventHost"></span></p>
-				<p><strong>Landmark:</strong> <span id="eventLocation"></span></p>
-			</div>
+            <!-- Current Date -->
+            <div class="date">
+                <p id="currentDate"></p>
+            </div>
 
-			<!-- Current Date -->
-			<div class="date">
-				<p id="currentDate"></p>
-			</div>
+            <!-- Event List (dynamique via JS) -->
+            <div class="event-list"></div>
+            
+            <!-- Create Event Button (admin only) -->
+            <div class="create admin-only" style="display: none;">
+                <a href="add_event.html">➕ Add Event</a>
+            </div>
+        </div>
 
-			<!-- Event List (dynamique via JS) -->
-			<div class="event-list"></div>
-			
-			<!-- Create Event Button (admin only) -->
-			<div class="create admin-only" style="display: none;">
-				<a href="add_event.html">➕ Add Event</a>
-			</div>
-
-		</div>
-
-		<script src="update.js"></script>
-	</body>
+        <script src="update.js"></script>
+    </body>
 </html>
