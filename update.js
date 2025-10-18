@@ -74,7 +74,17 @@ fetch(eventEndpoint)
 		});
 
 		const filteredEvents = events.filter(event => {
-			const [hour] = event.time.split(":").map(Number);
+			let hour = NaN;
+
+			if (typeof event.time === "string") {
+				const [h] = event.time.split(":").map(Number);
+				hour = h;
+			} else if (event.time instanceof Date || typeof event.time === "object") {
+				hour = new Date(event.time).getHours();
+			} else if (!isNaN(Date.parse(event.time))) {
+				hour = new Date(event.time).getHours();
+			}
+
 			console.log("🔍 Checking hour:", hour);
 			return hour >= blockStart && hour < blockEnd;
 		});
