@@ -10,7 +10,7 @@
 
 // 🎭 Bannières par défaut
 const defaultBanners = [
-  "assets/img/pub1.jpg",
+  "assets/img/1_wgcbanner.jpg",
   "assets/img/pub2.jpg",
   "assets/img/pub3.jpg"
 ];
