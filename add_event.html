@@ -1,86 +1,112 @@
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<title>Ajouter un événement RP</title>
-		<style>
-			body { font-family: sans-serif; padding: 2.0em; background: #f9f9f9; }
-			form { background: white; font-size: 1.5em; padding: 1em; border-radius: 8px; max-width: 400px; margin: auto; }
-			label { font-size: 1.5em; display: block; margin-top: 1em; }
-			input, button { font-size: 1.5em; width: 100%; padding: 0.5em; margin-top: 0.5em; }
-			button { background: #4CAF50; color: white; border: none; cursor: pointer; }
-			#confirmation { margin-top: 1em; text-align: center; font-weight: bold; }
-  </style>
-</head>
-<body>
-  <form id="eventForm">
-    <h2>➕ Add event</h2>
-    <label>🕒 Hours:</label>
-    <input type="time" name="time" required>
-    <label>📅 Date:</label>
-    <input type="date" name="date" required>
-    <label>🎭 Title:</label>
-    <input type="text" name="title" required>
-    <label>👤 Animateur:</label>
-    <input type="text" name="host">
-    <label>📍 Landmark:</label>
-    <input type="text" name="location">
-    <label>🖼️ Flyer (URL):</label>
-    <input type="url" name="image">
-    <label>🔁 Weekly:</label>
-    <input type="checkbox" name="repeat">
-    <button type="submit">📤 Send</button>
-    <button type="button" onclick="cancelForm()">❌ Cancel</button>
-  </form>
-
-  <div id="confirmation"></div>
-
-  <script>
-    // 🔐 Capture et stocke l’UUID dès le chargement initial
-    (function () {
-      const urlUUID = new URLSearchParams(window.location.search).get("uuid");
-      if (urlUUID) {
-        localStorage.setItem("wg_uuid", urlUUID);
-        const cleanURL = window.location.origin + window.location.pathname;
-        window.history.replaceState({}, document.title, cleanURL);
+  <head>
+    <meta charset="UTF-8">
+    <title>Ajouter un événement RP</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 2.0em;
+        background: #f9f9f9;
       }
-    })();
+      form {
+        background: white;
+        font-size: 1.5em;
+        padding: 1em;
+        border-radius: 8px;
+        max-width: 400px;
+        margin: auto;
+      }
+      label {
+        font-size: 1.5em;
+        display: block;
+        margin-top: 1em;
+      }
+      input,
+      button {
+        font-size: 1.5em;
+        width: 100%;
+        padding: 0.5em;
+        margin-top: 0.5em;
+      }
+      button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #confirmation {
+        margin-top: 1em;
+        text-align: center;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="eventForm">
+      <h2>➕ Add event</h2>
+      <label>🕒 Hours:</label>
+      <input type="time" name="time" required />
+      <label>📅 Date:</label>
+      <input type="date" name="date" required />
+      <label>🎭 Title:</label>
+      <input type="text" name="title" required />
+      <label>🔁 Weekly:</label>
+      <input type="checkbox" name="repeat" />
+      <button type="submit">📤 Send</button>
+      <button type="button" onclick="cancelForm()">❌ Cancel</button>
+    </form>
 
-    document.getElementById("eventForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const form = e.target;
-      const formData = new FormData(form);
+    <div id="confirmation"></div>
 
-      // 🔁 Normalise la checkbox repeat
-      formData.set("repeat", form.repeat.checked ? "true" : "false");
+    <script>
+      // 🔐 Capture et stocke l’UUID dès le chargement initial
+      (function () {
+        const urlUUID = new URLSearchParams(window.location.search).get("uuid");
+        if (urlUUID) {
+          localStorage.setItem("wg_uuid", urlUUID);
+          const cleanURL = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, cleanURL);
+        }
+      })();
 
-      // 🔐 Injecte l’UUID stocké
-      const uuid = localStorage.getItem("wg_uuid");
-      if (uuid) formData.set("uuid", uuid);
+      document.getElementById("eventForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
 
-      const body = new URLSearchParams(formData).toString();
+        // 🔁 Normalise la checkbox repeat
+        formData.set("repeat", form.repeat.checked ? "true" : "false");
 
-      fetch("https://wgevent.wintersgatesl.workers.dev/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-        body: body
-      })
-      .then(res => {
-        if (!res.ok) throw new Error("response not ok");
-        return res.text();
-      })
-      .then(msg => {
-        document.getElementById("confirmation").textContent = msg;
-        console.log("Réponse serveur:", msg);
-      })
-      .catch(err => {
-        console.error("Erreur de soumission :", err);
-        document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
+        // 🔐 Injecte l’UUID stocké
+        const uuid = localStorage.getItem("wg_uuid");
+        if (uuid) formData.set("uuid", uuid);
+
+        const body = new URLSearchParams(formData).toString();
+
+        fetch("https://wgevent.wintersgatesl.workers.dev/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+          },
+          body: body
+        })
+          .then(res => {
+            if (!res.ok) throw new Error("response not ok");
+            return res.text();
+          })
+          .then(msg => {
+            document.getElementById("confirmation").textContent = msg;
+            console.log("Réponse serveur:", msg);
+          })
+          .catch(err => {
+            console.error("Erreur de soumission :", err);
+            document.getElementById("confirmation").textContent = "❌ Erreur réseau ou script.";
+          });
       });
-    });
 
-    function cancelForm() {
-      window.location.href = "index.html";
-    }
-  </script>
-</body>
+      function cancelForm() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
 </html>
