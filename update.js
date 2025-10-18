@@ -10,13 +10,12 @@
 
 // 🎭 Bannières par défaut
 const defaultBanners = [
-  "assets/img/1_wgcbanner.jpg",
-  "assets/img/4_gatorsfoot.jpg",
-  "assets/img/2_wgpdbanner.jpg",
-  "assets/img/5_gatorsbasket.jpg",
-  "assets/img/3_wgfdbanner.jpg",
-  "assets/img/6_gatorstennis.jpg"
-  /*"assets/img/7_gatorsswim.jpg",*/
+    "assets/img/1_wgcbanner.jpg",
+    "assets/img/4_gatorsfoot.jpg",
+    "assets/img/2_wgpdbanner.jpg",
+    "assets/img/5_gatorsbasket.jpg",
+    "assets/img/3_wgfdbanner.jpg",
+    "assets/img/6_gatorstennis.jpg"
 ];
 
 let bannerIndex = 0;
@@ -28,7 +27,7 @@ console.log("UUID actif :", uuid);
 
 // 🎖️ Mode admin si UUID reconnu
 const ADMIN_UUIDS = [
-  "24f8bb10-9088-4220-aa12-28ed2b006a9a"
+    "24f8bb10-9088-4220-aa12-28ed2b006a9a"
 ];
 
 if (ADMIN_UUIDS.includes(uuid)) {
@@ -47,16 +46,20 @@ setInterval(() => {
     location.reload();
 }, 60000); // toutes les 60 secondes
 
+startBannerRotation(); // ✅ Lance la rotation dès le chargement
+
 fetch(eventEndpoint)
     .then(res => res.json())
     .then(data => {
         events = removeDuplicates(data);
+
         function getSLTime() {
             const now = new Date();
             const utc = now.getTime() + now.getTimezoneOffset() * 60000;
             const slOffset = -8; // GMT-8
             return new Date(utc + 3600000 * slOffset);
         }
+
         const now = getSLTime();
         const currentHour = now.getHours();
 
@@ -68,11 +71,11 @@ fetch(eventEndpoint)
 
         document.getElementById("currentDate").textContent = currentDate;
 
-        const blockStart =  currentHour >= 6 && currentHour < 12 ? 6 :
-                            currentHour >= 12 && currentHour < 18 ? 12 :
-                            currentHour >= 18 && currentHour < 24 ? 18 : 0;
-        const blockEnd =    blockStart + 6;
-    
+        const blockStart = currentHour >= 6 && currentHour < 12 ? 6 :
+                           currentHour >= 12 && currentHour < 18 ? 12 :
+                           currentHour >= 18 && currentHour < 24 ? 18 : 0;
+        const blockEnd = blockStart + 6;
+
         const filteredEvents = events.filter(event => {
             let hour = NaN;
 
@@ -89,11 +92,6 @@ fetch(eventEndpoint)
         });
 
         renderEventList(filteredEvents);
-        if (filteredEvents.length > 0) {
-            selectEvent(filteredEvents[0]);
-        } else {
-            selectEvent(null);
-        }
     });
 
 // 🔁 Supprime les doublons (titre + date)
@@ -111,11 +109,22 @@ function removeDuplicates(data) {
 function renderEventList(events) {
     const list = document.querySelector(".event-list");
     list.innerHTML = "";
+
     events.forEach(event => {
-        const btn = document.createElement("button");
-        btn.textContent = `🕒 ${event.time} - ${event.title}`;
-        btn.onclick = () => selectEvent(event);
-        list.appendChild(btn);
+        const block = document.createElement("div");
+        block.className = "event-block";
+
+        const line1 = document.createElement("div");
+        line1.className = "event-title";
+        line1.textContent = `🕒 ${event.time} – ${event.title}`;
+
+        const line2 = document.createElement("div");
+        line2.className = "event-meta";
+        line2.textContent = `👤 Host: ${event.host || "–"}     📍 Where: ${event.location || "–"}`;
+
+        block.appendChild(line1);
+        block.appendChild(line2);
+        list.appendChild(block);
     });
 }
 
@@ -127,22 +136,6 @@ function startBannerRotation() {
         bannerIndex = (bannerIndex + 1) % defaultBanners.length;
         document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
     }, 10000);
-}
-
-function stopBannerRotation() {
-    clearInterval(bannerInterval);
-    bannerInterval = null;
-}
-
-// 🎯 Sélectionne un événement
-function selectEvent(event) {
-    if (!event) {
-        startBannerRotation();
-        return;
-    }
-
-    stopBannerRotation();
-    document.getElementById("eventBanner").src = defaultBanners[bannerIndex];
 }
 
 // 📤 Envoie un événement au serveur
