@@ -11,9 +11,12 @@
 // 🎭 Bannières par défaut
 const defaultBanners = [
   "assets/img/1_wgcbanner.jpg",
-  "assets/img/2_wgpdbanner.jpg",
-  "assets/img/3_wgfdbanner.jpg",
   "assets/img/4_gatorsfoot.jpg",
+  "assets/img/2_wgpdbanner.jpg",
+  "assets/img/5_gatorsbasket.jpg",
+  "assets/img/3_wgfdbanner.jpg",
+  "assets/img/6_gatorstennis.jpg"
+  /*"assets/img/7_gatorsswim.jpg",*/
 ];
 
 let bannerIndex = 0;
