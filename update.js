@@ -15,7 +15,9 @@ const defaultBanners = [
     "assets/img/2_wgpdbanner.jpg",
     "assets/img/5_gatorsbasket.jpg",
     "assets/img/3_wgfdbanner.jpg",
-    "assets/img/6_gatorstennis.jpg"
+    "assets/img/6_gatorstennis.jpg",
+    "assets/img/7_gatorswim.jpg",
+    "assets/img/8_gatorcheer.jpg"
 ];
 
 let bannerIndex = 0;
